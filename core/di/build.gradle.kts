@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tydev.whattodo.core.data"
+    namespace = "com.tydev.whattodo.core.di"
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -15,6 +15,7 @@ android {
 
 dependencies {
     implementation(project(":core:domain"))
+    implementation(project(":core:data"))
     implementation(libs.androidx.core.ktx)
 
     implementation(libs.kotlinx.coroutines.android)
