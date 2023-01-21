@@ -20,7 +20,4 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.android)
 
-    implementation(libs.room.ktx)
-    implementation(libs.room.compiler)
-    implementation(libs.room.runtime)
 }

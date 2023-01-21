@@ -73,6 +73,12 @@ object NiaIcons {
     val ViewDay = Icons.Rounded.ViewDay
     val VolumeOff = Icons.Rounded.VolumeOff
     val VolumeUp = Icons.Rounded.VolumeUp
+    val Task = R.drawable.ic_task
+    val TaskBorder = R.drawable.ic_task_border
+    val Chart = R.drawable.ic_chart
+    val ChartBorder = R.drawable.ic_chart_border
+    val Profile = R.drawable.ic_profile
+    val ProfileBorder = R.drawable.ic_profile_border
 }
 
 /**

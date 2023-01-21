@@ -46,7 +46,6 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.tydev.whattodo.core.designsystem.component.ThemePreviews
 import com.tydev.whattodo.core.designsystem.theme.NiaTheme
 import kotlinx.coroutines.launch
 
@@ -58,17 +57,17 @@ fun NiaLoadingWheel(
     val infiniteTransition = rememberInfiniteTransition()
 
     // Specifies the float animation for slowly drawing out the lines on entering
-    val startValue = if (LocalInspectionMode.current) 0F else 1F
+    val startValue = if (LocalInspectionMode.current) ZEROFLOAT else MINFLOAT
     val floatAnimValues = (0 until NUM_OF_LINES).map { remember { Animatable(startValue) } }
     LaunchedEffect(floatAnimValues) {
         (0 until NUM_OF_LINES).map { index ->
             launch {
                 floatAnimValues[index].animateTo(
-                    targetValue = 0F,
+                    targetValue = ZEROFLOAT,
                     animationSpec = tween(
-                        durationMillis = 100,
+                        durationMillis = DURATIONMILLIS,
                         easing = FastOutSlowInEasing,
-                        delayMillis = 40 * index
+                        delayMillis = DELAY_MILLIS * index
                     )
                 )
             }
@@ -77,7 +76,7 @@ fun NiaLoadingWheel(
 
     // Specifies the rotation animation of the entire Canvas composable
     val rotationAnim by infiniteTransition.animateFloat(
-        initialValue = 0F,
+        initialValue = ZEROFLOAT,
         targetValue = 360F,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = ROTATION_TIME, easing = LinearEasing)
@@ -93,12 +92,12 @@ fun NiaLoadingWheel(
             targetValue = baseLineColor,
             animationSpec = infiniteRepeatable(
                 animation = keyframes {
-                    durationMillis = ROTATION_TIME / 2
-                    progressLineColor at ROTATION_TIME / NUM_OF_LINES / 2 with LinearEasing
+                    durationMillis = ROTATION_TIME / HALF
+                    progressLineColor at ROTATION_TIME / NUM_OF_LINES / HALF with LinearEasing
                     baseLineColor at ROTATION_TIME / NUM_OF_LINES with LinearEasing
                 },
                 repeatMode = RepeatMode.Restart,
-                initialStartOffset = StartOffset(ROTATION_TIME / NUM_OF_LINES / 2 * index)
+                initialStartOffset = StartOffset(ROTATION_TIME / NUM_OF_LINES / HALF * index)
             )
         )
     }
@@ -107,20 +106,20 @@ fun NiaLoadingWheel(
     Canvas(
         modifier = modifier
             .size(48.dp)
-            .padding(8.dp)
+            .padding(SHADOWELEVATION.dp)
             .graphicsLayer { rotationZ = rotationAnim }
             .semantics { contentDescription = contentDesc }
     ) {
         repeat(NUM_OF_LINES) { index ->
-            rotate(degrees = index * 30f) {
+            rotate(degrees = index * DEGREES) {
                 drawLine(
                     color = colorAnimValues[index].value,
                     // Animates the initially drawn 1 pixel alpha from 0 to 1
-                    alpha = if (floatAnimValues[index].value < 1f) 1f else 0f,
+                    alpha = if (floatAnimValues[index].value < MINFLOAT) 1f else ZEROFLOAT,
                     strokeWidth = 4F,
                     cap = StrokeCap.Round,
-                    start = Offset(size.width / 2, size.height / 4),
-                    end = Offset(size.width / 2, floatAnimValues[index].value * size.height / 4)
+                    start = Offset(size.width / HALF, size.height / QUARTER),
+                    end = Offset(size.width / HALF, floatAnimValues[index].value * size.height / QUARTER)
                 )
             }
         }
@@ -133,11 +132,11 @@ fun NiaOverlayLoadingWheel(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        shape = RoundedCornerShape(60.dp),
-        shadowElevation = 8.dp,
-        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.83f),
+        shape = RoundedCornerShape(ROUNDEDSHAPE.dp),
+        shadowElevation = SHADOWELEVATION.dp,
+        color = MaterialTheme.colorScheme.surface.copy(alpha = COLORALPHA),
         modifier = modifier
-            .size(60.dp),
+            .size(ROUNDEDSHAPE.dp),
     ) {
         NiaLoadingWheel(
             contentDesc = contentDesc,
@@ -167,3 +166,13 @@ fun NiaOverlayLoadingWheelPreview() {
 
 private const val ROTATION_TIME = 12000
 private const val NUM_OF_LINES = 12
+private const val DELAY_MILLIS = 40
+private const val DEGREES = 30f
+private const val HALF = 2
+private const val QUARTER = 4
+private const val ROUNDEDSHAPE = 60
+private const val COLORALPHA = 0.83f
+private const val SHADOWELEVATION = 8
+private const val DURATIONMILLIS = 100
+private const val ZEROFLOAT = 0F
+private const val MINFLOAT = 1F

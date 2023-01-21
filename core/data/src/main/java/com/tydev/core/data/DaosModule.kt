@@ -1,4 +1,4 @@
-package com.tydev.core.di.database
+package com.tydev.core.data
 
 import com.tydev.core.data.datasource.local.TodoDao
 import com.tydev.core.data.datasource.local.TodoDatabase

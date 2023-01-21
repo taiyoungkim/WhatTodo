@@ -63,6 +63,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:todo"))
+    implementation(project(":core:designsystem"))
+
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)

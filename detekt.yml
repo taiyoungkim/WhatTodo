@@ -2,7 +2,7 @@ complexity:
   LongMethod:
     threshold: 100
     ignoreAnnotated: [ 'Composable' ]
-  ComplexMethod:
+  CyclomaticComplexMethod:
     ignoreAnnotated: [ 'Composable' ]
   LongParameterList:
     active: false
@@ -23,7 +23,7 @@ style:
   ForbiddenComment:
     active: false
   UnusedPrivateMember:
-    ignoreAnnotated: [ 'preview' ]
+    ignoreAnnotated: [ 'Preview' ]
   ThrowsCount:
     active: false
   ReturnCount:
@@ -33,6 +33,7 @@ style:
   DestructuringDeclarationWithTooManyEntries:
     active: false
   MaxLineLength:
+    maxLineLength: 150
     excludeCommentStatements: true
   UnnecessaryAbstractClass:
     ignoreAnnotated: [ 'Module' ]
@@ -46,3 +47,5 @@ naming:
     active: false
   VariableNaming:
     active: false
+  PackageNaming:
+    packagePattern: '[a-z]+(\._?[_?A-Za-z0-9]*)*'

@@ -1,4 +1,4 @@
-package com.tydev.core.di.database
+package com.tydev.core.data
 
 import android.content.Context
 import androidx.room.Room

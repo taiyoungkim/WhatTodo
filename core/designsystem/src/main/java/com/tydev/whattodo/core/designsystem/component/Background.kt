@@ -97,7 +97,7 @@ fun NiaGradientBackground(
                     // degrees off the vertical axis
                     val offset = size.height * tan(
                         Math
-                            .toRadians(11.06)
+                            .toRadians(RADIANS)
                             .toFloat()
                     )
 
@@ -111,13 +111,13 @@ fun NiaGradientBackground(
                         } else {
                             currentTopColor
                         },
-                        0.724f to Color.Transparent,
+                        COLORTRANSPARENT to Color.Transparent,
                         start = start,
                         end = end,
                     )
                     // Create the bottom gradient that fades in before the halfway point vertically
                     val bottomGradient = Brush.linearGradient(
-                        0.2552f to Color.Transparent,
+                        COLORTRANSPARENT2 to Color.Transparent,
                         1f to if (currentBottomColor == Color.Unspecified) {
                             Color.Transparent
                         } else {
@@ -194,3 +194,7 @@ fun GradientBackgroundAndroid() {
         NiaGradientBackground(Modifier.size(100.dp), content = {})
     }
 }
+
+const val RADIANS = 11.06
+const val COLORTRANSPARENT = 0.724f
+const val COLORTRANSPARENT2 = 0.2552f
